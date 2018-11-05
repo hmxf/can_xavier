@@ -103,26 +103,6 @@ Here are contents you neet to use these scripts.
 
 >sudo ip link set down can0
 
-## **Data sending and receiving test**
-
-### **Send data to default ID 0x1 with CAN standard frame,data are 0x11 22 33 44 55 66 77 88**
-### **8 byte max every frame**
-
->cansend can0 0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88
-
-### **-e for extend frame,CAN_ID 29bit max;standard frame's CAN_ID 11bit max**
-### **-i for CAN_ID**
-
->cansend can0 -i 0x800 0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88 -e
-
-### **--loop=20 for send 20 packets**
-
->cansend can0 -i 0x02 0x11 0x12 --loop=20
-
-### **Receive CAN0 data**
-
->candump can0
-
 ----
 
 # Rev2
