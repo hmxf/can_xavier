@@ -3,24 +3,17 @@ CAN Bus Drive Script
 
 ----
 
-- Rev1 for register-modify Version.(NOT Recommended.)
-
-- Rev2 for prebuilt-driver Version.(Recommended because the drivers are shipped with system.)
-
-----
 Here are contents you neet to use these scripts.
 
 ----
 
-# Rev1
+# **Configure CAN controller**
 
-## **Modify registers(This has been updated because it's complex and dangerous.)**
-
-### **Install busybox, we need a tool called devmem:**
+- **Install busybox, we need a tool called devmem:**
 
 >sudo apt install busybox
 
-### **Check current values of related registers:**
+- **Check current values of related registers:**
 
 >sudo busybox devmem 0x0c303000
 
@@ -30,7 +23,7 @@ Here are contents you neet to use these scripts.
 
 >sudo busybox devmem 0x0c303018
 
-### **We can continue to modify registers if returned values are exactly these:**
+- **We can continue to modify registers if returned values are exactly these:**
 
 >0x0000C055
 
@@ -40,7 +33,7 @@ Here are contents you neet to use these scripts.
 
 >0x0000C059
 
-### **Use devmem to modify registers:**
+- **Use devmem to modify registers:**
 
 >sudo busybox devmem 0x0c303000 32 0x0000C400
 
@@ -50,7 +43,7 @@ Here are contents you neet to use these scripts.
 
 >sudo busybox devmem 0x0c303018 32 0x0000C458
 
-### **Check modified values of related registers:**
+- **Check modified values of related registers:**
 
 >sudo busybox devmem 0x0c303000
 
@@ -60,7 +53,7 @@ Here are contents you neet to use these scripts.
 
 >sudo busybox devmem 0x0c303018
 
-### **It supposed to be successful if returned values are exactly these:**
+- **It supposed to be successful if returned values are exactly these:**
 
 >0x0000C400
 
@@ -70,46 +63,7 @@ Here are contents you neet to use these scripts.
 
 >0x0000C458
 
-## **Mount CAN Bus**
-
-### **Use modprobe to mount CAN Bus Controller:**
-
->sudo modprobe can
-
->sudo modprobe can_raw
-
->sudo modprobe mttcan
-
-## **Open CAN Controller**
-
-
-### **The following command initialize CAN0 controller and set baudrate to 500Kbps,modify port number and baudrate if you need.**
-
->sudo ip link set can0 type can bitrate 500000
-
-### **The following command initialize CAN0 controller,open loopback function and set baudrate to 500Kbps.Modify port number and baudrate if you need.**
-
->sudo ip link set can0 type can bitrate 500000 loopback on
-
-### **The following command open CAN0 controller,you can test data TX/RX on port CAN0 if you have functionally configured hardware transceiver circuit.**
-
->sudo ip link set up can0
-
-### **Use the following cammand to get details about CAN0 controller.You may find informations useful for debug.Go for ifconfig is also an access to information.**
-
->ip -details -statistics link show can0
-
-### **Shutdown CAN0 controller if need.**
-
->sudo ip link set down can0
-
-----
-
-# Rev2
-
-## **Configure CAN controller**
-
-### **Load prebuilt but not loaded drivers(Please modify path if system has been updated)**
+- **Load prebuilt but not loaded drivers(Please modify path if system has been updated)**
 
 >sudo insmod /lib/modules/4.9.108-tegra/kernel/net/can/can.ko
 
@@ -123,31 +77,41 @@ Here are contents you neet to use these scripts.
 
 >sudo insmod /lib/modules/4.9.108-tegra/kernel/drivers/net/can/mttcan/native/mttcan.ko
 
-### **Configure CAN controller with 1Mbps baudrate**
+- **Or you can use modprobe to mount CAN Controller**
+
+>sudo modprobe can
+
+>sudo modprobe can_raw
+
+>sudo modprobe mttcan
+
+### **It seems that use modprobe is same as load drivers, so either is OK.**
+
+- **Configure CAN controller with 1Mbps baudrate**
 
 >sudo ip link set can0 type can bitrate 1000000
 
 >sudo ip link set can1 type can bitrate 1000000
 
-### **Configure CAN controller as loopback test mode**
+- **Configure CAN controller as loopback test mode**
 
 >sudo ip link set can0 type can bitrate 1000000 loopback on
 
 >sudo ip link set can1 type can bitrate 1000000 loopback on
 
-### **Open CAN controller**
+- **Open CAN controller**
 
 >sudo ip link set up can0
 
 >sudo ip link set up can1
 
-### **Check the status of CAN controller**
+- **Check the status of CAN controller**
 
 >ip -s -d link show can0
 
 >ip -s -d link show can1
 
-### **Close CAN controller**
+- **Close CAN controller**
 
 >sudo ip link set down can0
 
@@ -157,11 +121,11 @@ Here are contents you neet to use these scripts.
 
 # **Test CAN0 controller(loopback test)**
 
-### **Open two treminals A and B,run this command in treminal A:**
+- **Open two treminals A and B,run this command in treminal A:**
 
 >candump can0
 
-### **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
+- **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
 
 >cansend can0 5A1#1122334455667788
 
@@ -169,14 +133,14 @@ Here are contents you neet to use these scripts.
 
 # **Test two CAN controllers if you have configured hardware transceiver circuit.**
 
-### **Open two treminals A and B,run this command in treminal A:**
+- **Open two treminals A and B,run this command in treminal A:**
 
 >candump can0
 
-### **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
+- **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
 
 >cansend can1 5A1#1122334455667788
 
-### **It supposed to be successful if returned values are these:**
+- **It supposed to be successful if returned values are these:**
 
 >can0 5A1 [8] 11 22 33 44 55 66 77 88
