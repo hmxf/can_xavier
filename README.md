@@ -153,6 +153,8 @@ Here are contents you neet to use these scripts.
 
 >sudo ip link set down can1
 
+----
+
 # **Test CAN0 controller(loopback test)**
 
 ### **Open two treminals A and B,run this command in treminal A:**
@@ -162,6 +164,8 @@ Here are contents you neet to use these scripts.
 ### **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
 
 >cansend can0 5A1#1122334455667788
+
+----
 
 # **Test two CAN controllers if you have configured hardware transceiver circuit.**
 
