@@ -3,10 +3,6 @@ CAN Bus Drive Script
 
 ----
 
-Here are contents you neet to use these scripts.
-
-----
-
 # **Configure CAN controller**
 
 - **Install busybox, we need a tool called devmem:**
