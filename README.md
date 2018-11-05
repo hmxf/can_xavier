@@ -87,13 +87,13 @@ Here are contents you neet to use these scripts.
 
 >sudo ip link set can0 type can bitrate 500000
 
+### **The following command initialize CAN0 controller,open loopback function,set baudrate to 500Kbps,and open CAN0 controller.Modify port number and baudrate if you need.**
+
+>sudo ip link set can0 type can bitrate 500000 loopback on
+
 ### **The following command open CAN0 controller,you can test data TX/RX on port CAN0 if you have functionally configured hardware transceiver circuit.**
 
 >sudo ip link set up can0
-
-### **The following command initialize CAN0 controller,open loopback function,set baudrate to 500Kbps,and open CAN0 controller.Modify port number and baudrate if you need.**
-
->sudo ip link set can0 up type can bitrate 500000 loopback on
 
 ### **Use the following cammand to get details about CAN0 controller.You may find informations useful for debug.Go for ifconfig is also an access to information.**
 
