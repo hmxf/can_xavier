@@ -162,3 +162,17 @@ Here are contents you neet to use these scripts.
 ### **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
 
 >cansend can0 5A1#1122334455667788
+
+## **Test CAN controllers if you have functionally configured hardware transceiver circuit.**
+
+### **Open two treminals A and B,run this command in treminal A:**
+
+>candump can0
+
+### **Now the command executed in terminal A should under a listener mode and user inputs are not accepted.Now execute the following command in terminal B and watch what will happen in terminal A.**
+
+>cansend can1 5A1#1122334455667788
+
+### **It supposed to be successful if returned values are these:**
+
+>can0 5A1 [8] 11 22 33 44 55 66 77 88
